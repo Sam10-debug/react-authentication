@@ -1,0 +1,17 @@
+.sign-up{
+	background-color: red;
+	width: 70%;
+	margin-inline: auto;
+}
+.sign-up form{
+	display:flex;
+	flex-direction:column;
+	gap:10px;
+	justify-content:center;
+	align-items:center;
+}
+.sign-up form div{
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
