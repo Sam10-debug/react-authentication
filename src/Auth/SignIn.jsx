@@ -1,17 +1,18 @@
-import {useEffect,useState } from 'react';
+import {useState } from 'react';
 import { useData } from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
 	const [email,setEmail]=useState("")
 	const [password,setPassword]=useState("")
-	const {accessToken,refreshToken,setAccessToken,setRefreshToken}=useData()
+	const {setAccessToken}=useData()
 	const navigate=useNavigate()
 
 	const handleLogin = async (e) => {
 		// Make a request to the server to authenticate the user
 		e.preventDefault()
-		const response = await fetch('https://apexdgreat.pythonanywhere.com/auth/login', {
+		try{
+			const response = await fetch('https://apexdgreat.pythonanywhere.com/auth/login', {
 		  method: 'POST',
 		  body: JSON.stringify({ email, password }),
 		  headers: {
@@ -30,12 +31,11 @@ const SignIn = () => {
 			alert(data.message)
 			navigate("/")
 		}
-		else {
-		  // Handle login error
-		  console.error('Login failed');
+		}catch(e){
+			console.error(e);
 		}
+		
 	  };
-	   // Function to handle token refresh
   
   return (
 	<section className='sign-up'>

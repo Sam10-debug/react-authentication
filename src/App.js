@@ -7,22 +7,25 @@ import { DataGet, useData } from './Context/AuthContext';
 
 const App=()=> {
   const {setAccessToken,refreshToken}=useData()
+   // Function to handle token refresh
   const handleTokenRefresh = async () => {
     // Make a request to the server to refresh the access token using the refresh token
-    const response = await fetch('/api/refresh', {
-      method: 'POST',
-      body: JSON.stringify({ refreshToken }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try{
+      const response = await fetch('/api/refresh', {
+        method: 'POST',
+        body: JSON.stringify({ refreshToken }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setAccessToken(data.accessToken);
+      }
+    }catch(e){
+      console.error('e');
 
-    if (response.ok) {
-      const data = await response.json();
-      setAccessToken(data.accessToken);
-    } else {
-      // Handle token refresh error
-      console.error('Token refresh failed');
     }
   };
     // useEffect hook to automatically refresh the access token when it expires
